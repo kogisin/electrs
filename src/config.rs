@@ -17,6 +17,7 @@ pub const ELECTRS_VERSION: &str = env!("CARGO_PKG_VERSION");
 const DEFAULT_SERVER_ADDRESS: [u8; 4] = [127, 0, 0, 1]; // by default, serve on IPv4 localhost
 
 mod internal {
+    #![allow(unused_imports)]
     include!(concat!(env!("OUT_DIR"), "/configure_me_config.rs"));
 }
 
@@ -197,18 +198,12 @@ impl Config {
             internal::prelude::Config::including_optional_config_files(default_config_files())
                 .unwrap_or_exit();
 
-        fn unsupported_network(network: Network) -> ! {
-            eprintln!("Error: unsupported network: {}", network);
-            std::process::exit(1);
-        }
-
         let db_subdir = match config.network {
             Network::Bitcoin => "bitcoin",
             Network::Testnet => "testnet",
             Network::Testnet4 => "testnet4",
             Network::Regtest => "regtest",
             Network::Signet => "signet",
-            unsupported => unsupported_network(unsupported),
         };
 
         config.db_dir.push(db_subdir);
@@ -219,7 +214,6 @@ impl Config {
             Network::Testnet4 => 48332,
             Network::Regtest => 18443,
             Network::Signet => 38332,
-            unsupported => unsupported_network(unsupported),
         };
         let default_daemon_p2p_port = match config.network {
             Network::Bitcoin => 8333,
@@ -227,7 +221,6 @@ impl Config {
             Network::Testnet4 => 48333,
             Network::Regtest => 18444,
             Network::Signet => 38333,
-            unsupported => unsupported_network(unsupported),
         };
         let default_electrum_port = match config.network {
             Network::Bitcoin => 50001,
@@ -235,7 +228,6 @@ impl Config {
             Network::Testnet4 => 40001,
             Network::Regtest => 60401,
             Network::Signet => 60601,
-            unsupported => unsupported_network(unsupported),
         };
         let default_monitoring_port = match config.network {
             Network::Bitcoin => 4224,
@@ -243,7 +235,6 @@ impl Config {
             Network::Testnet4 => 44224,
             Network::Regtest => 24224,
             Network::Signet => 34224,
-            unsupported => unsupported_network(unsupported),
         };
 
         let magic = match (config.network, config.signet_magic) {
@@ -291,7 +282,6 @@ impl Config {
             Network::Testnet4 => config.daemon_dir.push("testnet4"),
             Network::Regtest => config.daemon_dir.push("regtest"),
             Network::Signet => config.daemon_dir.push("signet"),
-            unsupported => unsupported_network(unsupported),
         }
 
         let mut deprecated_options_used = false;

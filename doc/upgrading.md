@@ -11,7 +11,7 @@
 |WARN      |                  1|Things that could indicate serious problems                           |
 |INFO      |                  2|Various significant events and suggestions                            |
 |DEBUG     |                  3|Details that could be useful when debugging - only use when debugging!|
-|TRACE     |                  4|**Very** detailed information - only use when debugging!              |  
+|TRACE     |                  4|**Very** detailed information - only use when debugging!              |
 
 
 ### Important changes from versions older than 0.9.0
@@ -38,7 +38,7 @@ Upgrading checklist:
 * If you use `verbose = 4` (or `-vvvv` argument) lower it down to `2` (`-vv`) for production use.
   Keeping it would waste resources because we utilize it more now.
 * **After reindexing**, if you did **not** delete `mainnet` subdirectory within `db_dir` check that `electrs` works as expected and then *delete whole `mainnet` subdirectory*.
-* If you are using our Dockerfile, please make sure to re-map the DB volume (see [the section above](docker.md#docker-based-installation-from-source)).
+* If you are using our Dockerfile, please make sure to re-map the DB volume (see [the section above](install.md#docker-based-installation-from-source)).
 
 ### Important changes from version older than 0.8.8
 
@@ -69,7 +69,7 @@ sudo apt update
 sudo apt upgrade
 ```
 
-Similarly for other distributions - use their respective commands.  
+Similarly for other distributions - use their respective commands.
 If a new version of `electrs` is not yet in the package system, try waiting a few days or contact the maintainers of the packages if it has been a long time.
 
 ### Upgrading manual installation
@@ -85,6 +85,6 @@ If a new version of `electrs` is not yet in the package system, try waiting a fe
    If you don't remember which linking you used, you probably used static.
    This step will take a few tens of minutes (but dynamic linking is a bit faster), go grab a coffee.
    Also remember that you need enough free RAM, the build will die otherwise
-7. If you've previously copied `electrs` into `/usr/local/bin` run: sudo `cp target/release/electrs /usr/local/bin`
+7. If you've previously copied `electrs` into `/usr/local/bin` run: `sudo cp target/release/electrs /usr/local/bin`
    If you've previously installed `electrs` using `cargo install`: `cargo install --locked --path . -f`
 8. If you've manually configured systemd service: `sudo systemctl restart electrs`
